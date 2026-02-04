@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <title>Events & Workshops — The Sleeping Cat Farm</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <link rel="stylesheet" href="../css/responsive.css" />
+</head>
+<body class="inner-page">
+
+<!-- NAV -->
+<nav id="navbar" class="scrolled">
+  <a href="../index.html" class="nav-logo-wrapper">
+    <img src="../assets/icons/farm-logo.svg" alt="The Sleeping Cat Farm Logo" class="nav-logo-icon">
+    <div class="nav-logo"></div>
+  </a>
+  <ul class="nav-links" id="nav-links"></ul>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="section-label">On the Farm</div>
+  <h2 class="section-title">Events &amp;<br><em>Workshops</em></h2>
+  <p  class="section-desc">Join us for hands-on cheesemaking workshops, guided tastings, and intimate farm evenings. Something for every cheese lover.</p>
+</section>
+
+<!-- EVENT LISTINGS -->
+<div class="events-list" id="events-list">
+  <!-- Populated by JS -->
+</div>
+
+<!-- EVENT DETAIL (expanded, shown below the listing) -->
+<div id="event-details" style="padding-bottom: 20px;">
+  <!-- Populated by JS for each event -->
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-bottom">
+    <span id="footer-copyright"></span>
+    <div  class="social-links" id="footer-social-logo"></div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="../js/config.js"></script>
+<script src="../js/render.js"></script>
+<script src="../js/animations.js"></script>
+<script>
+(function() {
+  const events = SITE_CONFIG.events;
+
+  // ─── Event listing cards ───
+  const listEl = document.getElementById('events-list');
+  listEl.innerHTML = events.map(ev =>
+    `<div class="event-card reveal">
+       <div class="event-card-visual">
+         <div class="event-wheel"></div>
+       </div>
+       <div class="event-card-body">
+         <div class="event-category">${ev.category}</div>
+         <h3>${ev.title}</h3>
+         <div class="event-meta">
+           <p><strong>📅 Date</strong> ${ev.date}</p>
+           <p><strong>🕕 Time</strong> ${ev.time}</p>
+           <p><strong>📍 Where</strong> ${ev.location}</p>
+           <p><strong>💰 Price</strong> ${ev.price}</p>
+         </div>
+         <p class="event-short-desc">${ev.shortDesc}</p>
+         <a href="#event-detail-${ev.slug}" class="btn-primary" style="font-size:.64rem;">See Details</a>
+       </div>
+     </div>`
+  ).join('');
+
+  // ─── Event detail sections ───
+  const detailsEl = document.getElementById('event-details');
+  detailsEl.innerHTML = events.map(ev => {
+    const wpLink = `https://wa.me/${SITE_CONFIG.brand.whatsapp}?text=${encodeURIComponent(ev.whatsappMsg)}`;
+    return `<section id="event-detail-${ev.slug}" class="event-detail-section" style="background:var(--cream-dark); padding-top:var(--space-xl);">
+              <div style="max-width:780px; margin:0 auto; padding:0 var(--space-lg) var(--space-xl);">
+                <div class="section-label" style="text-align:left;">${ev.category}</div>
+                <h2>${ev.title}</h2>
+
+                <div class="event-detail-meta">
+                  <div><strong>Date</strong><p>${ev.date}</p></div>
+                  <div><strong>Time</strong><p>${ev.time}</p></div>
+                  <div><strong>Location</strong><p>${ev.location}</p></div>
+                  <div><strong>Price</strong><p>${ev.price}</p></div>
+                </div>
+
+                <p class="event-long-desc">${ev.longDesc}</p>
+
+                <h4 style="font-family:var(--font-serif); font-size:1.1rem; font-weight:500; color:var(--deep-brown); margin-bottom:.8rem; padding-bottom:.4rem; border-bottom:1px solid var(--cream-dark);">What's Included</h4>
+                <ul class="event-highlights">
+                  ${ev.highlights.map(h => `<li>${h}</li>`).join('')}
+                </ul>
+
+                <a href="${wpLink}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.01 15.38c-1.23-.58-2.67-1.13-3.01-1.75-.34-.62.17-1.39.61-1.67C15.3 8.59 13 5.42 13 5.42c-.08-.12-.33-.03-.61.11-.28.14-.76.39-.76.39C8.71 3.53 5 4 5 4S.18 3.82.01 9.08 3.01 18 3.01 18s5.73 6.49 11.62 5.38c5.89-1.11 5.74-7.9 5.74-7.9s.83-.92-1.36-1.1zM9.25 6.61l1.75 4.13-2.7.58L9.25 6.61z"/></svg>
+                  Book via WhatsApp
+                </a>
+
+                <a href="../index.html" style="display:inline-block; margin-left:1rem; font-size:.72rem; color:var(--text-muted); text-decoration:none; letter-spacing:.1em; text-transform:uppercase;">← Back to Home</a>
+              </div>
+            </section>`;
+  }).join('');
+
+  // Shared renders
+  renderBrand();
+  renderNav();
+  renderFooter();
+  renderSocial();
+  initAnimations();
+})();
+</script>
+
+</body>
+</html>

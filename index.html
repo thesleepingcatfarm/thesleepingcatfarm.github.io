@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Sleeping Cat Farm</title>
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════════════════ -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo-wrapper">
+    <img src="assets/icons/farm-logo.svg" alt="The Sleeping Cat Farm Logo" class="nav-logo-icon">
+    <div class="nav-logo"></div>
+  </a>
+  <ul class="nav-links" id="nav-links"></ul>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-slideshow" id="hero-slideshow">
+    <div class="hero-slide active" style="background-image: url('assets/images/hero-1.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('assets/images/hero-2.jpg')"></div>
+    <div class="hero-slide" style="background-image: url('assets/images/hero-3.jpg')"></div>
+  </div>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-buttons">
+      <a class="btn-primary hero-cta" href="pages/cheese-collection.html">Explore Products</a>
+      <a class="btn-primary hero-cta" href="pages/events.html">View Events</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MARQUEE
+     ═══════════════════════════════════════════════════════════ -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     OUR STORY
+     ═══════════════════════════════════════════════════════════ -->
+<section id="story" class="story-section">
+  <div class="story">
+    <div class="story-visual">
+      <img class="story-cat" src="assets/images/rani.jpg" alt="Milo the sleeping cat" />
+    </div>
+    <div class="story-text reveal">
+      <div  class="section-label" id="story-label"></div>
+      <h2   class="section-title" id="story-title"></h2>
+      <p    class="section-desc"  id="story-body"></p>
+      <div  class="story-pillars" id="story-pillars"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PROCESS
+     ═══════════════════════════════════════════════════════════ -->
+<section id="process" class="process">
+  <div  class="section-label" id="process-label"></div>
+  <h2   class="section-title" id="process-title"></h2>
+  <p    class="section-desc"  id="process-desc"></p>
+  <div  class="process-steps" id="process-steps"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CHEESE COLLECTION (all products displayed)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="collection" class="collection" style="padding-bottom: 20px;">
+  <h2  class="section-title reveal" style="margin-top: 0;">The <em>Cheese</em> Collection</h2>
+  <p   class="section-desc reveal" style="margin-bottom: 25px;">Each variety has its own story, its own temperament, its own moment to shine.</p>
+  <div class="cheese-grid" id="cheese-grid" style="grid-template-columns: repeat(3, 1fr);"></div>
+  <style>
+    /* show only first 3 items in the grid */
+    #cheese-grid > *:nth-child(n+4) { display: none !important; }
+    /* prevent overflow if items would expand */
+    #cheese-grid { overflow: hidden; }
+  </style>
+  <div style="text-align: center; margin-top: 2.5rem; padding-bottom: 20px;">
+    <a href="pages/cheese-collection.html" class="btn-primary">View All Cheeses</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     SUBSCRIPTION CTA
+     ═══════════════════════════════════════════════════════════ -->
+<section id="subscribe" class="subscription">
+  <div  class="section-label" id="sub-label"></div>
+  <h2   class="section-title" id="sub-title"></h2>
+  <p    class="section-desc"  id="sub-desc"></p>
+  <a    class="btn-primary"   id="sub-cta" href="#"></a>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     RECIPES PREVIEW
+     ═══════════════════════════════════════════════════════════ -->
+
+<section id="product-row-section" class="product-row-section" style="padding-bottom: 20px;">
+  <h2  class="section-title reveal" style="margin-top: 0;">Cooking with the <em>Farm</em></h2>
+  <div class="recipes-grid" id="recipes-grid">
+  <!-- Populated by JS -->
+  </div>
+  <style>
+    /* show only first 2 items in the grid */
+    #recipes-grid > *:nth-child(n+3) { display: none !important; }
+    /* prevent overflow if items would expand */
+    #recipes-grid { overflow: hidden; }
+  </style>
+  <div style="text-align: center; margin-top: 0; padding-bottom: 20px;">
+    <a href="pages/recipes.html" class="btn-primary">View All Recipes</a>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FEATURED / SIGNATURE WHEEL
+     ═══════════════════════════════════════════════════════════ -->
+<section class="featured" id="featured">
+  <div class="featured-inner">
+    <div class="featured-visual reveal" id="featured-visual">
+      <div class="wheel-big"></div>
+      <div class="accent-line"></div>
+    </div>
+    <div class="featured-text reveal">
+      <div  class="section-label"  id="featured-label"></div>
+      <h2   class="section-title"  id="featured-title"></h2>
+      <p    class="section-desc"   id="featured-desc"></p>
+      <div  class="feat-detail"    id="featured-details"></div>
+      <a    class="btn-primary"    id="featured-cta" href="#"></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TESTIMONIALS
+     ═══════════════════════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="section-label reveal">Kind Words</div>
+  <h2  class="section-title reveal">What People<br><em>Are Saying</em></h2>
+  <div class="testimonial-grid" id="testimonial-grid"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONTACT SECTION
+     ═══════════════════════════════════════════════════════════ -->
+<section id="contact-section" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-info">
+      <div  class="section-label">Get in Touch</div>
+      <h2   class="section-title" style="text-align:left;">Say<br><em>Hello</em></h2>
+      <p class="contact-desc">We'd love to hear from you - whether it's a question about our cheeses, a bulk order enquiry, or just a friendly hello.</p>
+      <div class="contact-details">
+        <p><strong>Email:</strong> <span id="contact-email"></span></p>
+        <p><strong>Phone/WhatsApp:</strong> <span id="contact-phone"></span></p>
+        <p><strong>Address:</strong> <span id="contact-address"></span></p>
+      </div>
+    </div>
+    <div class="contact-form-wrap">
+      <form id="contact-form">
+        <div class="form-row">
+          <input type="text"  id="cf-name"    placeholder="Your Name" required />
+        </div>
+        <div class="form-row">
+          <input type="tel"   id="cf-phone"   placeholder="Your Phone Number" required />
+        </div>
+        <div class="form-row">
+          <input type="text"  id="cf-subject" placeholder="Subject" />
+        </div>
+        <div class="form-row">
+          <textarea id="cf-message" placeholder="Your message…" required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%; text-align:center;">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════ -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div id="footer-columns-1"></div>
+    <div id="footer-columns-2"></div>
+    <div class="social-links" id="footer-social" style="justify-content: center;"></div>
+    <div id="location" class="map-wrap">
+      <div id="map-container"></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span id="footer-copyright"></span>
+    <div  class="social-links" id="footer-social-logo"></div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SCRIPTS
+     ═══════════════════════════════════════════════════════════ -->
+<script src="js/config.js"></script>
+<script src="js/render.js"></script>
+<script src="js/animations.js"></script>
+<script>
+  (function() {
+  const grid = document.getElementById('recipes-grid');
+  grid.innerHTML = SITE_CONFIG.recipes.map(r =>
+    `<a href="pages/recipe-${r.slug}.html" class="recipe-card reveal" style="text-decoration:none; color:inherit;">
+       <div class="recipe-card-visual">
+         <div class="recipe-wheel"></div>
+       </div>
+       <div class="recipe-card-body">
+         <div class="recipe-meta">
+           <span>${r.category}</span>
+           <span>⏱ ${r.time}</span>
+           <span>👤 Serves ${r.servings}</span>
+         </div>
+         <h3>${r.title}</h3>
+         <p>${r.intro}</p>
+       </div>
+     </a>`
+  ).join('');
+
+  renderAll();
+  initAnimations();
+})();
+
+// Contact form handling
+document.addEventListener('DOMContentLoaded', function() {
+  const contactForm = document.getElementById('contact-form');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('cf-name').value;
+      const phone = document.getElementById('cf-phone').value;
+      const subject = document.getElementById('cf-subject').value;
+      const message = document.getElementById('cf-message').value;
+
+      // Create WhatsApp message
+      const whatsappMessage = `*New Contact Form Submission*\n\nName: ${name}\nPhone: ${phone}\nSubject: ${subject}\n\nMessage:\n${message}`;
+
+      // Construct WhatsApp URL
+      const whatsappURL = `https://wa.me/${SITE_CONFIG.brand.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
+
+      // Open WhatsApp in new tab
+      window.open(whatsappURL, '_blank');
+
+      // Reset form
+      contactForm.reset();
+
+      // Optional: Show success message
+      alert('Thank you for your message! You will be redirected to WhatsApp to complete sending your message.');
+    });
+  }
+});
+
+</script>
+
+</body>
+</html>
