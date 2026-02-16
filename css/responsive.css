@@ -214,8 +214,8 @@
     text-align: center;
   }
 
-  /* Limit items shown on Mobile Homepage */
-  #cheese-grid>*:nth-child(n+3) {
+  /* Limit items shown on Mobile Homepage ONLY */
+  body:not(.inner-page) #cheese-grid>*:nth-child(n+3) {
     display: none !important;
   }
 
@@ -280,6 +280,11 @@
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+
+  /* Events fix */
+  .event-content-wrapper {
+    padding: 0 1.5rem 3rem !important;
   }
 }
 

@@ -39,7 +39,8 @@
   <section class="page-hero">
     <div class="section-label">On the Farm</div>
     <h2 class="section-title">Events &amp;<br><em>Workshops</em></h2>
-    <p class="section-desc" style="margin-bottom: 0.5rem">Join us for hands-on cheesemaking workshops, guided tastings, and intimate farm evenings.
+    <p class="section-desc" style="margin-bottom: 0.5rem">Join us for hands-on cheesemaking workshops, guided tastings,
+      and intimate farm evenings.
       Something for every cheese lover.</p>
   </section>
 
@@ -72,7 +73,7 @@
       detailsEl.innerHTML = events.map(ev => {
         const wpLink = `https://wa.me/${SITE_CONFIG.brand.whatsapp}?text=${encodeURIComponent(ev.whatsappMsg)}`;
         return `<section id="event-detail-${ev.slug}" class="event-detail-section" style="background:var(--cream-dark); padding-top:var(--space-xl);">
-              <div style="max-width:780px; margin:0 auto; padding:0 var(--space-lg) var(--space-xl);">
+              <div class="event-content-wrapper">
                 <div class="event-card reveal" style="margin: 0.1rem;">
                   <img src="${ev.image}" alt="${ev.title}" class="event-image">
                 </div>
