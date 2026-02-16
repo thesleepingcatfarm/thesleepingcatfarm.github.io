@@ -28,6 +28,7 @@
 
   .nav-hamburger {
     display: flex;
+    flex-direction: column;
   }
 
   /* Hero */
@@ -207,6 +208,10 @@
   .process-steps,
   .testimonial-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cheese-card {
+    text-align: center;
   }
 
   /* Limit items shown on Mobile Homepage */
