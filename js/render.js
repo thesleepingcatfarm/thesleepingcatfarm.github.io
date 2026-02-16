@@ -39,6 +39,15 @@ function renderNav() {
 
   ul.innerHTML = SITE_CONFIG.nav.map(item => {
     const href = item.href.startsWith('#') ? item.href : prefix + item.href;
+    if (item.isCart) {
+      return `<li><a href="${href}" class="nav-cart-link" aria-label="Cart">
+        <svg class="nav-cart-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        <span class="cart-badge" style="display:none;">0</span>
+      </a></li>`;
+    }
     return `<li><a href="${href}">${item.label}</a></li>`;
   }).join('');
 }
@@ -58,10 +67,10 @@ function renderStory() {
   const s = SITE_CONFIG.story;
   const label = document.getElementById('story-label');
   const title = document.getElementById('story-title');
-  const body  = document.getElementById('story-body');
+  const body = document.getElementById('story-body');
   if (label) label.textContent = s.label;
-  if (title) title.innerHTML   = s.title;
-  if (body)  body.textContent  = s.body;
+  if (title) title.innerHTML = s.title;
+  if (body) body.textContent = s.body;
 
   const pillarsEl = document.getElementById('story-pillars');
   if (!pillarsEl) return;
@@ -148,10 +157,10 @@ function renderProcess() {
   const p = SITE_CONFIG.process;
   const label = document.getElementById('process-label');
   const title = document.getElementById('process-title');
-  const desc  = document.getElementById('process-desc');
+  const desc = document.getElementById('process-desc');
   if (label) label.textContent = p.label;
-  if (title) title.innerHTML   = p.title;
-  if (desc)  desc.textContent  = p.desc;
+  if (title) title.innerHTML = p.title;
+  if (desc) desc.textContent = p.desc;
 
   const stepsEl = document.getElementById('process-steps');
   if (!stepsEl) return;
@@ -170,18 +179,24 @@ function renderFeatured() {
   const f = SITE_CONFIG.featured;
   const label = document.getElementById('featured-label');
   const title = document.getElementById('featured-title');
-  const desc  = document.getElementById('featured-desc');
-  const cta   = document.getElementById('featured-cta');
+  const desc = document.getElementById('featured-desc');
+  const cta = document.getElementById('featured-cta');
   if (label) label.textContent = f.label;
-  if (title) title.innerHTML   = f.title;
-  if (desc)  desc.textContent  = f.desc;
+  if (title) title.innerHTML = f.title;
+  if (desc) desc.textContent = f.desc;
 
-  // CTA links to WhatsApp
+  // CTA — Add to Cart for the reserve product
   if (cta) {
     cta.textContent = f.cta;
-    cta.href = whatsappLink(f.whatsappMsg);
-    cta.target = '_blank';
-    cta.rel = 'noopener noreferrer';
+    cta.href = '#';
+    cta.removeAttribute('target');
+    cta.removeAttribute('rel');
+    cta.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (typeof Cart !== 'undefined' && f.reserveProduct) {
+        Cart.addItem(f.reserveProduct);
+      }
+    });
   }
 
   // Details row
@@ -198,7 +213,7 @@ function renderFeatured() {
   // Visual: swap in a photo if provided
   const visual = document.getElementById('featured-visual');
   if (visual && f.image) {
-    visual.innerHTML = `<img src="${f.image}" alt="${f.title.replace(/<[^>]*>/g,'')}" class="featured-photo" />`;
+    visual.innerHTML = `<img src="${f.image}" alt="${f.title.replace(/<[^>]*>/g, '')}" class="featured-photo" />`;
   }
 }
 
@@ -223,12 +238,12 @@ function renderSubscription() {
   const s = SITE_CONFIG.subscription;
   const label = document.getElementById('sub-label');
   const title = document.getElementById('sub-title');
-  const desc  = document.getElementById('sub-desc');
-  const cta   = document.getElementById('sub-cta');
+  const desc = document.getElementById('sub-desc');
+  const cta = document.getElementById('sub-cta');
   if (label) label.textContent = s.label;
-  if (title) title.innerHTML   = s.title;
-  if (desc)  desc.textContent  = s.desc;
-  if (cta)   { cta.textContent = s.cta; cta.href = pathPrefix() + 'pages/subscription.html'; }
+  if (title) title.innerHTML = s.title;
+  if (desc) desc.textContent = s.desc;
+  if (cta) { cta.textContent = s.cta; cta.href = pathPrefix() + 'pages/subscription.html'; }
 }
 
 
@@ -295,13 +310,13 @@ function renderMap() {
   if (!m.enabled) { section.style.display = 'none'; return; }
   section.style.display = 'block';
 
-  const label   = document.getElementById('map-label');
-  const title   = document.getElementById('map-title');
-  const desc    = document.getElementById('map-desc');
+  const label = document.getElementById('map-label');
+  const title = document.getElementById('map-title');
+  const desc = document.getElementById('map-desc');
   const address = document.getElementById('map-address');
-  if (label)   label.textContent   = m.label;
-  if (title)   title.innerHTML     = m.title;
-  if (desc)    desc.textContent    = m.desc;
+  if (label) label.textContent = m.label;
+  if (title) title.innerHTML = m.title;
+  if (desc) desc.textContent = m.desc;
   if (address) address.textContent = m.address;
 
   // Check if we have a valid API key
@@ -330,8 +345,8 @@ function renderMap() {
   // Load actual Google Maps if API key is provided
   if (!document.getElementById('google-maps-script')) {
     const script = document.createElement('script');
-    script.id   = 'google-maps-script';
-    script.src  = `https://maps.googleapis.com/maps/api/js?key=${m.apiKey}&callback=initMap`;
+    script.id = 'google-maps-script';
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${m.apiKey}&callback=initMap`;
     script.async = true;
     document.head.appendChild(script);
   }
@@ -344,16 +359,16 @@ window.initMap = function () {
   new google.maps.Map(mapEl, {
     center: { lat: m.lat, lng: m.lng }, zoom: m.zoom,
     styles: [
-      { featureType:"landscape", stylers:[{color:"#f5f0e8"}] },
-      { featureType:"road",      stylers:[{color:"#d4b48c"}] },
-      { featureType:"poi",       stylers:[{visibility:"off"}] },
-      { featureType:"water",     stylers:[{color:"#c5d5c5"}] },
+      { featureType: "landscape", stylers: [{ color: "#f5f0e8" }] },
+      { featureType: "road", stylers: [{ color: "#d4b48c" }] },
+      { featureType: "poi", stylers: [{ visibility: "off" }] },
+      { featureType: "water", stylers: [{ color: "#c5d5c5" }] },
     ],
   });
   new google.maps.Marker({
     position: { lat: m.lat, lng: m.lng },
-    title:    SITE_CONFIG.brand.name,
-    icon: { path: google.maps.SymbolPath.CIRCLE, fillColor:'#b8956a', fillOpacity:1, strokeColor:'#3d2b1f', strokeWeight:2, scale:10 },
+    title: SITE_CONFIG.brand.name,
+    icon: { path: google.maps.SymbolPath.CIRCLE, fillColor: '#b8956a', fillOpacity: 1, strokeColor: '#3d2b1f', strokeWeight: 2, scale: 10 },
   });
 };
 

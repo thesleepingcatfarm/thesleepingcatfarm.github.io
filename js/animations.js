@@ -32,7 +32,7 @@ function initNavScroll() {
 }
 
 
-/* ─── 2. NAV DROPDOWN HOVER ─── */
+/* ─── 2. NAV DROPDOWN HOVER & HAMBURGER ─── */
 function initNavDropdowns() {
   /* Close all dropdowns when clicking outside */
   document.addEventListener('click', (e) => {
@@ -45,21 +45,53 @@ function initNavDropdowns() {
   document.querySelectorAll('.has-dropdown > a').forEach(a => {
     a.addEventListener('click', (e) => {
       const li = a.parentElement;
-      // If the href is just "#" or points to a section, allow default navigation
-      // but also toggle the dropdown on mobile
       if (window.innerWidth <= 900) {
         e.preventDefault();
         li.classList.toggle('open');
       }
     });
   });
+
+  /* Hamburger toggle */
+  const hamburger = document.querySelector('.nav-hamburger');
+  const navLinks = document.getElementById('nav-links');
+  const overlay = document.querySelector('.nav-overlay');
+
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      navLinks.classList.toggle('open');
+      if (overlay) overlay.classList.toggle('active');
+      document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
+
+    // Close nav when clicking overlay
+    if (overlay) {
+      overlay.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+
+    // Close nav when clicking a link (mobile)
+    navLinks.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        hamburger.classList.remove('open');
+        navLinks.classList.remove('open');
+        if (overlay) overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 }
 
 
 /* ─── 3. STAGGERED SCROLL REVEAL ─── */
 function initScrollReveal() {
   const STAGGER_MS = 110;
-  const THRESHOLD  = 0.12;
+  const THRESHOLD = 0.12;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -104,17 +136,17 @@ function initHeroEntrance() {
   if (!children.length) return;
 
   const BASE_DELAY = 320;
-  const STEP       = 200;
+  const STEP = 200;
 
   children.forEach((el, i) => {
-    el.style.opacity    = '0';
-    el.style.transform  = 'translateY(22px)';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(22px)';
     el.style.transition = `opacity 0.7s cubic-bezier(.22,.61,0,1) ${BASE_DELAY + i * STEP}ms,
                             transform 0.7s cubic-bezier(.22,.61,0,1) ${BASE_DELAY + i * STEP}ms`;
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        el.style.opacity   = '1';
+        el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
       });
     });
@@ -147,21 +179,21 @@ function initCardTilt() {
     const card = e.target.closest('.cheese-card');
     if (!card) return;
 
-    const rect    = card.getBoundingClientRect();
-    const centerX = rect.left + rect.width  / 2;
-    const centerY = rect.top  + rect.height / 2;
+    const rect = card.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
 
-    const rotateY = ((e.clientX - centerX) / (rect.width  / 2)) * MAX_TILT;
+    const rotateY = ((e.clientX - centerX) / (rect.width / 2)) * MAX_TILT;
     const rotateX = -((e.clientY - centerY) / (rect.height / 2)) * MAX_TILT;
 
-    card.style.transform  = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
     card.style.transition = 'transform 0.1s ease-out';
   });
 
   document.addEventListener('mouseleave', (e) => {
     const card = e.target.closest('.cheese-card');
     if (!card) return;
-    card.style.transform  = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
     card.style.transition = 'transform 0.45s cubic-bezier(.22,.61,0,1)';
   });
 }
@@ -175,13 +207,13 @@ function initCounters() {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
 
-      const el     = entry.target;
+      const el = entry.target;
       const target = parseInt(el.textContent, 10);
-      const start  = performance.now();
+      const start = performance.now();
 
       function tick(now) {
         const progress = Math.min((now - start) / DURATION, 1);
-        const eased    = 1 - Math.pow(1 - progress, 3);
+        const eased = 1 - Math.pow(1 - progress, 3);
         el.textContent = String(Math.round(eased * target)).padStart(2, '0');
         if (progress < 1) requestAnimationFrame(tick);
       }
@@ -199,8 +231,8 @@ function initCounters() {
 function initAccordion() {
   document.querySelectorAll('.detail-accordion-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const item  = btn.closest('.detail-accordion-item');
-      const body  = item.querySelector('.detail-accordion-body');
+      const item = btn.closest('.detail-accordion-item');
+      const body = item.querySelector('.detail-accordion-body');
       const isOpen = btn.classList.contains('open');
 
       // Close all others in the same accordion
@@ -226,8 +258,8 @@ function initContactForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name    = form.querySelector('#cf-name').value;
-    const email   = form.querySelector('#cf-email').value;
+    const name = form.querySelector('#cf-name').value;
+    const email = form.querySelector('#cf-email').value;
     const subject = form.querySelector('#cf-subject').value || 'Inquiry';
     const message = form.querySelector('#cf-message').value;
 
