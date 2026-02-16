@@ -219,7 +219,25 @@
     display: none !important;
   }
 
-  /* Show only 2 cheeses */
+  /* Force show all items on Collection Page */
+  .inner-page #cheese-grid>*:nth-child(n+3) {
+    display: block !important;
+  }
+
+  /* Fix subscription list alignment */
+  .tier-card ul,
+  .tier-card li {
+    text-align: center;
+  }
+
+  /* Hero buttons margin fix */
+  .hero-buttons .btn-primary {
+    width: auto;
+    min-width: 280px;
+    margin: 0 auto;
+  }
+
+  /* Show only 2 cheeses on homepage */
   #recipes-grid>*:nth-child(n+2) {
     display: none !important;
   }
