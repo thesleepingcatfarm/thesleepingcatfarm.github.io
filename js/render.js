@@ -13,7 +13,34 @@ function getProduct(slug) {
 /** Determine the relative path prefix based on current page location.
  *  Homepage is at root; inner pages are in /pages/ so they need "../" */
 function pathPrefix() {
-  return window.location.pathname.includes('/pages/') ? '../' : '';
+  // Case-insensitive check for /pages/
+  return window.location.pathname.toLowerCase().includes('/pages/') ? '../' : '';
+}
+
+/**
+ * Robustly extract the product slug from the URL.
+ * Handles:
+ * - /pages/product-name.html
+ * - /product-name.html
+ * - /product-name
+ * - /product-name/
+ */
+function getCurrentSlug() {
+  let path = window.location.pathname;
+  // Remove trailing slash if present
+  if (path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
+  const filename = path.split('/').pop(); // e.g., "product-dozing-gold.html" or "dozing-gold"
+
+  let slug = filename.toLowerCase().replace('.html', '');
+
+  // If filename starts with "product-", strip it
+  if (slug.startsWith('product-')) {
+    slug = slug.replace('product-', '');
+  }
+
+  return slug;
 }
 
 

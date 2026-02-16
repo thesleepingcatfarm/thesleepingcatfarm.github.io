@@ -23,6 +23,7 @@ const Cart = (function () {
 
   /** Parse price string like "₹ 580" → 580 */
   function _parsePrice(priceStr) {
+    if (typeof priceStr !== 'string') return 0;
     return parseInt(priceStr.replace(/[^0-9]/g, ''), 10) || 0;
   }
 
@@ -51,6 +52,11 @@ const Cart = (function () {
      * @param {number} [qty=1]
      */
     addItem: function (product, qty) {
+      console.log('Adding to cart:', product);
+      if (!product || !product.slug) {
+        console.error('Invalid product:', product);
+        return;
+      }
       qty = qty || 1;
       var items = _load();
       var existing = null;
@@ -64,13 +70,13 @@ const Cart = (function () {
         existing.qty += qty;
       } else {
         items.push({
-          slug:   product.slug,
-          name:   product.name,
-          price:  product.price,
+          slug: product.slug,
+          name: product.name,
+          price: product.price,
           weight: product.weight || '',
-          type:   product.type  || '',
+          type: product.type || '',
           cardStyle: product.cardStyle || '',
-          qty:    qty
+          qty: qty
         });
       }
       _save(items);
@@ -154,7 +160,7 @@ const Cart = (function () {
       for (var i = 0; i < items.length; i++) {
         var item = items[i];
         var unitPrice = _parsePrice(item.price);
-        var subtotal  = unitPrice * item.qty;
+        var subtotal = unitPrice * item.qty;
         total += subtotal;
         lines.push(
           (i + 1) + '. ' + item.name.replace(/&amp;/g, '&') +

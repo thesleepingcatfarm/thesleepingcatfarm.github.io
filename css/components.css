@@ -248,9 +248,34 @@ section { padding: var(--space-xl) var(--space-lg); }
 }
 
 .btn-whatsapp img {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+}
+
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #25D366; /* WhatsApp Green */
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+}
+
+.btn-whatsapp:hover {
+  background-color: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
 }
 
 

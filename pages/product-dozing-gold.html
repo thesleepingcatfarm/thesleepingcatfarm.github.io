@@ -78,8 +78,7 @@
   <script>
     (function () {
       // ─── Determine which product to show from the filename ───
-      const filename = window.location.pathname.split('/').pop(); // e.g. "product-dozing-gold.html"
-      const slug = filename.replace('product-', '').replace('.html', '');
+      const slug = getCurrentSlug();
       const product = SITE_CONFIG.products.find(p => p.slug === slug);
 
       if (!product) {
